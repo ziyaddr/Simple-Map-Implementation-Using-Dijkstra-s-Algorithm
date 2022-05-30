@@ -42,7 +42,8 @@ def dijkstra(graph, src, iterations):
             iterations[0] += 1
             if graph[i][j] > 0 and spTree[j] == False and dist[j] > dist[i] + graph[i][j]:
                 dist[j] = dist[i] + graph[i][j]
-                path[j] = [str(src)] + path[i][1:] + [str(j)]
+                costStr = [str(j) + "(" + str(dist[j]) + ")"]
+                path[j] = [str(src)] + path[i][1:] + costStr
     return dist, path
 
 
