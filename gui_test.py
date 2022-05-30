@@ -13,7 +13,8 @@ import timeit
 
 LARGEFONT = ('Helvetica 24 bold')
 MEDIUMFONT = ('Helvetica 20 bold')
-SMALLFONT = ('Helvetica 16')
+SMALLFONT = ('Helvetica 14')
+VERYSMALLFONT = ('Helvetica 10')
 
 def plot():
     global frGraph
@@ -104,15 +105,21 @@ def plot():
     src_entry = Entry(master = frSrcDest)
     dest_entry = Entry(master = frSrcDest)
 
+
     solve_button = Button(master = frSrcDest, 
                      command = solve,
-                     height = 2, 
-                     width = 10,
-                     text = "Solve")
+                     height = 1, 
+                     width = 5,
+                     text = "Solve",
+                     bg='#3399FF',
+                      fg='white',
+                      font = SMALLFONT)
 
-    src_entry.grid(row=0)
-    dest_entry.grid(row=1)
-    solve_button.grid(row=2)
+    Label(frSrcDest, text="Source node:", bg='black', fg='white', font=SMALLFONT).grid(row=0)
+    src_entry.grid(row=1)
+    Label(frSrcDest, text="Destination node:", bg='black', fg='white', font=SMALLFONT).grid(row=2)
+    dest_entry.grid(row=3)
+    solve_button.grid(row=4, pady=10)
 
 def solve():
     global frResult
@@ -125,18 +132,17 @@ def solve():
         result = dijkstra(graph, src, iterations)
         end = timeit.default_timer()
         time = end-start
-        messagebox.showinfo(message=("res = " + str(result[dest]) + "iterations = " + str(iterations[0])))
     except:
         messagebox.showinfo(message="invalid source or destination")
         return
     
     frResult.destroy()
-    frResult = Frame(frRight)
-    frResult.grid(row=3, column=0)
-    Label(frResult, text="Dijkstra Result").grid(row=0, sticky=W)
-    Label(frResult, text= ("Shortest distance = " + str(result[dest]))).grid(row=1, sticky=W)
-    Label(frResult, text= ("Total iterations = " + str(iterations[0]))).grid(row=2, sticky=W)
-    Label(frResult, text= ("Time elapsed = " + str(time) + " s")).grid(row=3, sticky=W)
+    frResult = Frame(frRight, bg='#3399FF')
+    frResult.grid(row=5, column=0, pady=10)
+    Label(frResult, text="Dijkstra Result", font=VERYSMALLFONT, bg='#3399FF', fg='white').grid(row=0, sticky=W)
+    Label(frResult, text= ("Shortest distance = " + str(result[dest])), font=VERYSMALLFONT, bg='#3399FF', fg='white').grid(row=1, sticky=W)
+    Label(frResult, text= ("Total iterations = " + str(iterations[0])), font=VERYSMALLFONT, bg='#3399FF', fg='white').grid(row=2, sticky=W)
+    Label(frResult, text= ("Time elapsed = " + str(time) + " s"), font=VERYSMALLFONT, bg='#3399FF', fg='white').grid(row=3, sticky=W)
 
 
 # the main Tkinter window
@@ -163,30 +169,31 @@ frLeft = Frame(frMain, bg = 'black')
 frGraph = Frame(frLeft, bg = 'black')
 frRight = Frame(frMain, bg = 'black')
 frSrcDest = Frame(frRight, bg = 'black')
-frSrcDest.grid(row=2, column=0)
+frSrcDest.grid(row=3, column=0)
 frResult = Frame(frRight, bg = 'black')
-frResult.grid(row=3, column=0)
+frResult.grid(row=4, column=0)
 
 # filename input
-Label(frRight, font=SMALLFONT, fg='white', bg='white').grid(row=0, column=0)
+Label(frRight, font=SMALLFONT, fg='white', bg='black', text="Filename:").grid(row=0, column=0)
 filename_entry = Entry(master = frRight)
 filename_entry.grid(row=1, column=0)
   
 # button that displays the plot
 plot_button = Button(master = frRight, 
                      command = plot,
-                     height = 2, 
-                     width = 10,
+                     height = 1, 
+                     width = 5,
                      text = "Plot",
                      bg='#3399FF',
-                     fg='white')
-plot_button.grid(row=1, column=0, pady=10)
+                     fg='white',
+                     font = SMALLFONT)
+plot_button.grid(row=2, column=0, pady=10)
 
-frMain.pack()
+frMain.pack(pady=10)
   
 # place the button 
 # in main window
-frRight.grid(row=0, column=1, padx=10, pady=10)
+frRight.grid(row=0, column=1, padx=30, pady=10)
 
 
 
